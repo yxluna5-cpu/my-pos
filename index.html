@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="my">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My POS</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>🛒 My POS</h1>
+        <p>ဆိုင်ရောင်းဝယ်စာရင်း</p>
+    </header>
+
+
+    <nav>
+        <button onclick="showPage('pos')">
+            🛒 ရောင်းရန်
+        </button>
+
+        <button onclick="showPage('products')">
+            📦 ပစ္စည်း
+        </button>
+
+        <button onclick="showPage('reports')">
+            📊 အစီရင်ခံစာ
+        </button>
+
+      <button onclick="showPage('expenses')">
+    💸 အသုံးစရိတ်
+      </button>
+    </nav>
+
+
+    <!-- ========================= -->
+    <!-- POS -->
+    <!-- ========================= -->
+
+    <section id="pos" class="page">
+
+        <h2>🛒 ရောင်းရန်</h2>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="🔍 ပစ္စည်းရှာရန်..."
+            oninput="searchProduct()"
+        >
+
+        <div id="productList"></div>
+
+
+        <h3>🧾 ဝယ်ယူမည့်စာရင်း</h3>
+
+        <div id="cartList"></div>
+
+
+        <div class="total-box">
+
+            စုစုပေါင်း
+
+            <strong id="total">
+                0 Ks
+            </strong>
+
+        </div>
+
+
+    <select id="saleWallet">
+    <option value="cash">Cash</option>
+    <option value="kpay">KPay</option>
+    <option value="wave">Wave</option>
+</select>
+
+<button
+    class="sell-btn"
+    onclick="checkout()"
+>
+    💵 ရောင်းမည်
+</button>
+
+    </section>
+
+
+
+    <!-- ========================= -->
+    <!-- PRODUCTS -->
+    <!-- ========================= -->
+
+    <section id="products" class="page hidden">
+
+        <h2>📦 ပစ္စည်းစာရင်း</h2>
+
+
+        <input
+            type="text"
+            id="productName"
+            placeholder="ပစ္စည်းအမည်"
+        >
+
+
+        <input
+            type="number"
+            id="productBuyPrice"
+            placeholder="ဝယ်ဈေး"
+        >
+
+
+        <input
+            type="number"
+            id="productPrice"
+            placeholder="ရောင်းဈေး"
+        >
+
+
+        <input
+            type="number"
+            id="productStock"
+            placeholder="Stock အရေအတွက်"
+        >
+
+
+        <button onclick="addProduct()">
+            ➕ ပစ္စည်းထည့်မည်
+        </button>
+
+
+        <div id="manageProducts"></div>
+
+    </section>
+
+
+
+    <!-- ========================= -->
+    <!-- REPORTS -->
+    <!-- ========================= -->
+
+  <h3>💰 စတင်လက်ကျန်ထည့်ရန်</h3>
+
+  <div class="report-card">
+    <span>💵 Cash လက်ကျန်</span>
+    <strong id="openingCashBalance">0 Ks</strong>
+</div>
+
+<div class="report-card">
+    <span>📱 KPay လက်ကျန်</span>
+    <strong id="openingKpayBalance">0 Ks</strong>
+</div>
+
+<div class="report-card">
+    <span>🌊 Wave လက်ကျန်</span>
+    <strong id="openingWaveBalance">0 Ks</strong>
+</div>
+
+<select id="openingWallet">
+    <option value="cash">Cash</option>
+    <option value="kpay">KPay</option>
+    <option value="wave">Wave</option>
+</select>
+
+<input
+    type="number"
+    id="openingAmount"
+    placeholder="ငွေပမာဏ"
+>
+
+<button onclick="addOpeningBalance()">
+    ➕ လက်ကျန်ထည့်မည်
+</button>
+
+  <button onclick="editWalletBalances()">
+    ✏️ လက်ကျန်ငွေ ပြင်မည်
+  </button>
+
+  <section id="expenses" class="page hidden">
+
+    <h2>💸 အသုံးစရိတ်</h2>
+
+    <input
+        type="text"
+        id="expenseName"
+        placeholder="အသုံးစရိတ်အမည်">
+
+    <input
+        type="number"
+        id="expenseAmount"
+        placeholder="ငွေပမာဏ">
+
+    <select id="expenseWallet">
+        <option value="cash">Cash</option>
+        <option value="kpay">KPay</option>
+        <option value="wave">Wave</option>
+    </select>
+
+    <button onclick="addExpense()">
+        💸 အသုံးစရိတ်ထည့်မည်
+    </button>
+
+    <div id="expenseList"></div>
+
+  </section>
+
+    <section id="reports" class="page hidden">
+
+        <h2>📊 အစီရင်ခံစာ</h2>
+
+      <div class="report-card">
+    <span>💵 Cash လက်ကျန်</span>
+    <strong id="cashBalance">0 Ks</strong>
+</div>
+
+<div class="report-card">
+    <span>📱 KPay လက်ကျန်</span>
+    <strong id="kpayBalance">0 Ks</strong>
+</div>
+
+<div class="report-card">
+    <span>🌊 Wave လက်ကျန်</span>
+    <strong id="waveBalance">0 Ks</strong>
+</div>
+
+      <button onclick="editWalletBalances()">
+    ✏️ လက်ကျန်ငွေ ပြင်မည်
+      </button>
+
+
+        <div class="report-card">
+
+            <span>
+                ယနေ့ရောင်းအား
+            </span>
+
+            <strong id="todaySales">
+                0 Ks
+            </strong>
+
+        </div>
+
+
+        <div class="report-card">
+
+            <span>
+                ယနေ့အမြတ်
+            </span>
+
+            <strong id="todayProfit">
+                0 Ks
+            </strong>
+
+        </div>
+
+
+        <div class="report-card">
+
+            <span>
+                ရောင်းပြီးသောအကြိမ်
+            </span>
+
+            <strong id="todayOrders">
+                0
+            </strong>
+
+        </div>
+
+
+        <h3>
+            📋 ရောင်းပြီးသားစာရင်း
+        </h3>
+
+      <div>
+    <button onclick="showTodaySales()">
+        📅 ယနေ့
+    </button>
+
+    <button onclick="showMonthSales()">
+        🗓️ ဒီလ
+    </button>
+
+    <button onclick="showAllSales()">
+        📋 အားလုံး
+    </button>
+</div>
+
+<div id="salesFilterResult"></div>
+
+
+        <div id="salesHistory"></div>
+
+    </section>
+
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
